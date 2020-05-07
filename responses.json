@@ -1,0 +1,67 @@
+{
+    "greeting": {
+        "text": "Hello ",
+        "description": "Welcome to Vacay's Facebook Travel Assistant. I can help you search and book for flights in a few clicks!"
+    },
+    "products":  {
+        "text" : "What would you like to do today?",
+        "options": ["Book a Flight", "Talk to Agent"],
+        "payload": ["flights", "contact"]
+    },
+    "contact": {
+        "text": "Okay - an agent will be in contact with you shortly. Please type in your request below while you wait."
+    },
+    "from": {
+        "text": "Where are you flying from?\nPlease type your origin below. You can also choose from the following common cities:",
+        "options": ["Nairobi", "Mombasa", "Diani", "Kisumu", "Malindi"],
+        "payload": ["origin-nairobi", "origin-mombasa", "origin-diani", "origin-kisumu", "origin-malindi"]
+    },
+    "destination": {
+        "text": "Where are you flying to?\nPlease type your destination below. You can also choose from the following common cities:",
+        "options": ["Nairobi", "Mombasa", "Diani", "Kisumu", "Malindi"],
+        "payload": ["dest-nairobi", "dest-mombasa", "dest-diani", "dest-kisumu", "dest-malindi"]
+    },
+    "dates": {
+        "text": "When do you want to travel?\nYou can type in dates such as Jan 16 to Jan 31."
+    },
+    "confirmation": {
+        "text": "Great! Here are your search details:"
+    },
+    "details": {
+        "text": "Please confirm if your details are correct.",
+        "options": ["Correct", "Start New Search", "Speak to Agent"],
+        "payload": ["de-correct", "restart", "contact"]
+    },
+    "restart": {
+        "text": "Okay, clearing all your previous responses and starting a new search."
+    },
+    "date-error": {
+        "text": "There was an error in parsing the dates you provided.\nPlease try again and double check for their validity."
+    },
+    "end-error": {
+        "text": "The end date of your trip cannot be earlier than your start date - please enter a valid interval!"
+    },
+    "search": {
+        "text": "Great!\nPlease wait as I get flight options for you!"
+    },
+    "adults": {
+        "text": "How many adults (12yrs and above) are traveling?\nPlease type a number below."
+    },
+    "children": {
+        "text": "How many children (2 - 11 yrs) are traveling?\nPlease type a number below."
+    },
+    "infants": {
+        "text": "How many infants (less than two years) are traveling?\nPlease type a number below."
+   },
+   "response": {
+       "text": "Here are some of the flights available - please click View All to start booking:"
+   },
+   "no-flights": {
+       "text": "Unfortunately, we could not get flights to match your criteria!\nPlease start a new search below.",
+       "options": ["New Search", "Speak to Agent"],
+       "payload": ["restart", "contact"]
+   },
+   "control": {
+       "text": "The agent has marked this request as done. If you want to start a new search, please use the main menu.\nThanks!"
+   }
+}
