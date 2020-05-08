@@ -5,7 +5,7 @@ from flask_cors import CORS, cross_origin
 from config import Config, config
 from flask_session import Session
 
-from .whatsapp import bot
+from .twilio import bot
 
 sess = Session()
 

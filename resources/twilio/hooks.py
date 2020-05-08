@@ -4,7 +4,7 @@ from datetime import datetime
 from uuid import uuid4
 
 from . import bot
-from resources.utilities import create_logger
+from .utilities import create_logger
 
 logger = create_logger('bot')
 
