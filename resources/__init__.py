@@ -6,6 +6,7 @@ from config import Config, config
 from flask_session import Session
 
 from .twilio import bot
+from .mpesa import api
 
 sess = Session()
 
@@ -17,5 +18,6 @@ def setup(config_name):
 
 	version = os.environ.get('version')
 	application.register_blueprint(bot, url_prefix = '/{}/whatsapp'.format(version))
+	application.register_blueprint(api, url_prefix = '/{}/api'.format(version))
 	CORS(application)
 	return application
