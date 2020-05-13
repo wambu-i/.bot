@@ -28,11 +28,10 @@ def register_url():
 	headers = {
 		'Authorization': 'Bearer {}'.format(access_token),
 		'Content-Type': 'application/json',
-		'Host': 'sandbox.safaricom.co.ke'
 	}
 
 	data = {
-		'ShortCode': 600733,
+		'ShortCode': os.environ.get('short_code'),
 		'ResponseType': 'Completed',
 		'ConfirmationURL': os.environ.get('confirmation'),
 		'ValidationURL': os.environ.get('validation'),
@@ -51,3 +50,50 @@ def register_url():
 		logger.error('{} :{}'.format(r.status_code, r.text))
 
 	return None
+
+def transact(amount, number):
+	access_token = os.environ.get('access', None)
+	url = os.environ.get('simulate')
+	headers = {
+		'Authorization': 'Bearer {}'.format(access_token),
+		'Content-Type': 'application/json',
+	}
+
+	data = {
+		'ShortCode': os.environ.get('short_code'),
+		'CommandID': 'CustomerPayBillOnline',
+		'Amount': amount,
+		'Msisdn': number,
+		'BillRefNumber': ' '
+	}
+
+	r = requests.post(url, json = data, headers = headers)
+
+	if r.status_code in [200, 201]:
+		logger.info('Successfully registered callback URL')
+		response = r.json()
+		print(response)
+		if response['ResponseDescription'] == 'success':
+			return True
+		else:
+			return False
+	else:
+		logger.error('{} :{}'.format(r.status_code, r.text))
+
+	return None
+
+def simulate():
+	access_token = os.environ.get('access', None)
+
+	headers = {
+		'Authorization': 'Bearer {}'.format(access_token),
+		'Content-Type': 'application/json'
+	}
+
+	data = {
+		'ShortCode': os.environ.get('short_code'),
+		'CommandID': 'CustomerPayBillOnline',
+		'Amount': amount,
+		'Msisdn': number,
+		'BillRefNumber': ' '
+	}
