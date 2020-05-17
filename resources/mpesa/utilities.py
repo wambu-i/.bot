@@ -25,6 +25,7 @@ def register_url():
 	access_token = os.environ.get('access')
 	url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl'
 
+	print(access_token)
 	headers = {
 		'Authorization': 'Bearer {}'.format(access_token),
 		'Content-Type': 'application/json',
