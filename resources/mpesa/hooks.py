@@ -55,8 +55,10 @@ def register_callback():
 
 @api.route('/transact/', methods=['POST'])
 def make_transaction():
-	data = request.get_json()
-	transaction = transact(data['number'], data['amount'])
+	number = request.args.get('number')
+	amount = request.args.get('amount')
+
+	transaction = transact(number, amount)
 
 	if transaction:
 		result = json.dumps({

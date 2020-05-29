@@ -52,8 +52,9 @@ def register_url():
 
 	return None
 
-def transact(amount, number):
+def transact(number, amount):
 	access_token = os.environ.get('access', None)
+	print(access_token)
 	url = os.environ.get('simulate')
 	headers = {
 		'Authorization': 'Bearer {}'.format(access_token),
@@ -63,18 +64,19 @@ def transact(amount, number):
 	data = {
 		'ShortCode': os.environ.get('short_code'),
 		'CommandID': 'CustomerPayBillOnline',
-		'Amount': amount,
+		'Amount': float(amount),
 		'Msisdn': number,
-		'BillRefNumber': ' '
+		'BillRefNumber': 'account',
+		'AccountReference': 'test'
 	}
 
 	r = requests.post(url, json = data, headers = headers)
 
 	if r.status_code in [200, 201]:
-		logger.info('Successfully registered callback URL')
+		logger.info('Transaction successfully carried out.')
 		response = r.json()
 		print(response)
-		if response['ResponseDescription'] == 'success':
+		if len(response['ResponseDescription']) > 0 and len(response['ConversationID']) > 0:
 			return True
 		else:
 			return False
