@@ -9,6 +9,7 @@ idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+pycryptodome==3.9.7
 PyJWT==1.7.1
 python-dotenv==0.13.0
 pytz==2019.3

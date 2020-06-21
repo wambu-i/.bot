@@ -67,7 +67,7 @@ def transact(number, amount):
 		'Amount': float(amount),
 		'Msisdn': number,
 		'BillRefNumber': 'account',
-		'AccountReference': 'test'
+		#'AccountReference': 'test'
 	}
 
 	r = requests.post(url, json = data, headers = headers)
