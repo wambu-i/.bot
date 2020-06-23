@@ -1,11 +1,14 @@
 import os
 import json
+
 from flask import Flask, request, Response, session
+from twilio.twiml.messaging_response import MessagingResponse
 
 from . import bot
-from .utilities import create_logger
+from .utilities import create_logger, make_response
 
 logger = create_logger('bot')
+opt_ins = ['hi', 'hello']
 
 @bot.route('/', methods = ['GET'])
 def worker_verification():
@@ -13,12 +16,14 @@ def worker_verification():
 
 @bot.route('/listen/', methods = ['POST'])
 def worker_messaging():
+
 	body = request.values.get('Body', None)
+	obj = MessagingResponse()
+	if body.lower() in opt_ins:
+		response = make_response('w-greeting')
+		obj.message(response)
 
-	print(body)
-	r = Response(status = 200, mimetype = 'application/json')
-
-	return r
+	return str(obj)
 
 
 @bot.route('/test/<id>/', methods = ['GET'])

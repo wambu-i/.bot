@@ -1,10 +1,9 @@
 {
-    "greeting": {
-        "text": "Hello!",
-        "description": "Welcome to .bot's e-commerce assistant. I can help you pay for bills and utilities or purchase essentials goods and sevices!"
+    "w-greeting": {
+        "text": "Hello!\nWelcome to .bot's e-commerce assistant. I can help you pay for bills and utilities or purchase essentials goods and sevices!"
     },
-    "products":  {
-        "text" : "What would you like to do today?",
+    "w-products":  {
+        "text" : "What would you like to do today?\n1. Airtime Topup\n2. Buy KPLC tokens\n3. KPLC Postpaid Payments\n4. Pay for Internet\n5. Buy Bus Ticket\n6. Pay Other Bill",
         "options": ["Airtime Topup", "Buy KPLC tokens", "KPLC Postpaid Payments", "Pay for Internet", "Buy Bus Ticket", "Pay Other Bill"],
         "payload": ["credit", "tokens", "postpaid", "internet", "other"]
 	},
