@@ -1,13 +1,13 @@
 {
     "greeting": {
-        "text": "Hello ",
-        "description": "Welcome to Vacay's Facebook Travel Assistant. I can help you search and book for flights in a few clicks!"
+        "text": "Hello!",
+        "description": "Welcome to .bot's e-commerce assistant. I can help you pay for bills and utilities or purchase essentials goods and sevices!"
     },
     "products":  {
         "text" : "What would you like to do today?",
-        "options": ["Book a Flight", "Talk to Agent"],
-        "payload": ["flights", "contact"]
-    },
+        "options": ["Airtime Topup", "Buy KPLC tokens", "KPLC Postpaid Payments", "Pay for Internet", "Buy Bus Ticket", "Pay Other Bill"],
+        "payload": ["credit", "tokens", "postpaid", "internet", "other"]
+	},
     "contact": {
         "text": "Okay - an agent will be in contact with you shortly. Please type in your request below while you wait."
     },

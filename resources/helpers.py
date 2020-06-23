@@ -6,3 +6,6 @@ def create_logger(name):
 	logging.basicConfig(level = logging.DEBUG, format = FORMATTER)
 	logger = logging.getLogger(name)
 	return logger
+
+def create_session():
+	pass

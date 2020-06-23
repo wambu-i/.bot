@@ -100,3 +100,8 @@ def send_message(number, message):
 
 	re = r.json()
 	print(re['sid'], re['status'])
+
+def generate_user_session():
+	session = uuid4().hex
+
+	return session

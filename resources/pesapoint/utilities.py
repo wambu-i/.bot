@@ -1,6 +1,7 @@
 import os
 import json
 import base64
+import requests
 
 from Crypto.Cipher import AES
 
@@ -26,13 +27,26 @@ def get_encrypted_string():
 
 	text, tag = cipher.encrypt_and_digest(data.encode())
 
-	encoded = base64.b64encode(text)
+	encoded = base64.b64encode(text).decode('utf-8')
 	final_string = str(encoded).replace('+', '/').replace('/', '_').replace('=', ',')
 
 	return final_string
 
 
 def generate_session_id():
-	url = 'http://URL-2.com/businessclientrest/businessclientrest'
+	url = 'http://URL-2.com/distributorclientrest/distributorclientrest'
+	cipher = get_encrypted_string()
 
-get_encrypted_string()
+	if cipher is not None:
+		data = 'TerminalNumber={}&Data={}'.format(os.environ.get('terminal', 85681810), cipher)
+		print(data)
+		"""headers = {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
+			'Access-Control-Allow-Origin' : '*'
+	}"""
+		r = requests.post(url, data = data)
+
+		print(r.status_code)
+
+generate_session_id()
