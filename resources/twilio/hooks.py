@@ -5,7 +5,9 @@ from flask import Flask, request, Response, session
 from twilio.twiml.messaging_response import MessagingResponse
 
 from . import bot
-from .utilities import create_logger, make_response
+from .utilities import create_logger, make_response, send_message, generate_user_session
+from .parsers import parse_response
+from resources.models import using_mongo
 
 logger = create_logger('bot')
 opt_ins = ['hi', 'hello']
@@ -16,13 +18,31 @@ def worker_verification():
 
 @bot.route('/listen/', methods = ['POST'])
 def worker_messaging():
+	number = request.values.get('From')
+	body = request.values.get('Body')
+	try:
+		db = using_mongo()
+		db.mongo_connect()
+	except Exception as e:
+		logger.error('{}'.format(e.message))
 
-	body = request.values.get('Body', None)
 	obj = MessagingResponse()
 	if body.lower() in opt_ins:
-		response = make_response('w-greeting')
-		obj.message(response)
+		user = generate_user_session()
+		session['current'] = user
+		intro = make_response('w-greeting')
+		send_message(number, make_response('w-greeting'))
+		products = make_response('w-products')
+		obj.message(products)
+		db.create_session(number, user)
 
+	else:
+		id = session['current']
+		resp = parse_response(body.lower(), id)
+		obj.message(resp)
+
+	if db:
+		db.db_close()
 	return str(obj)
 
 

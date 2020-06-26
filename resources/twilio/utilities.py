@@ -47,10 +47,13 @@ def make_response(k, **kwargs):
 		logger.error("Could not find specified option in provided responses.")
 		return None
 
+	if k == 'w-greeting':
+		msg = loaded.get('text') + '{1}!\n' + loaded.get('description')
+		return msg
+
 	return loaded['text']
 
 def send_message(number, message):
-	print(message)
 	data = {
         "To": number,
         "From": TWILIO_NUMBER,
@@ -63,9 +66,6 @@ def send_message(number, message):
 		logger.info("Successfully sent message to Twilio api!")
 	else:
 		logger.error('{} :{}'.format(r.status_code, r.text))
-
-	re = r.json()
-	print(re['sid'], re['status'])
 
 def generate_user_session():
 	session = uuid4().hex

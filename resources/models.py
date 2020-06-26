@@ -3,7 +3,7 @@ from urllib import parse
 import os
 import logging
 
-from .utilities import create_logger
+from .helpers import create_logger
 
 logger = create_logger('database')
 
@@ -38,7 +38,6 @@ class using_mongo:
 		present = collection.count_documents({'_id': id})
 		if present != 0:
 			client = collection.find_one({'_id': id})
-			print(client)
 			if _type in client:
 				v = client[_type]
 				logger.info("Client already has {} {}. Replacing ...".format(_type, v))
