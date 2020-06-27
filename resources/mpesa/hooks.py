@@ -10,6 +10,7 @@ from .utilities import authenticate, register_url, transact
 @api.route('/authenticate/', methods = ['GET'])
 def get_token():
 	token = authenticate()
+
 	if token:
 		dotenv.set_key('.env', 'access', token)
 		result = json.dumps({
@@ -22,11 +23,9 @@ def get_token():
 		})
 		r = Response(response = result, status = 500, mimetype = 'application/json')
 
-	r.headers = {
-		'Content-Type': 'application/json',
-		'Accept': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
-	}
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
 
 	return r
 
@@ -45,11 +44,9 @@ def register_callback():
 		})
 		r = Response(response = result, status = 500, mimetype = 'application/json')
 
-	r.headers = {
-		'Content-Type': 'application/json',
-		'Accept': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
-	}
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
 
 	return r
 
@@ -71,15 +68,13 @@ def make_transaction():
 		})
 		r = Response(response = result, status = 500, mimetype = 'application/json')
 
-	r.headers = {
-		'Content-Type': 'application/json',
-		'Accept': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
-	}
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
 
 	return r
 
-@api.route('/confirmation/', methods = ['POST'])
+@api.route('/confirmation/', methods = ['GET'])
 def get_confirmation():
 	data = request.json()
 	print(data)
@@ -89,11 +84,9 @@ def get_confirmation():
 	})
 	r = Response(response = result, status = 200, mimetype = 'application/json')
 
-	r.headers = {
-		'Content-Type': 'application/json',
-		'Accept': 'application/json',
-		'Access-Control-Allow-Origin' : '*'
-	}
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
 
 	return r
 

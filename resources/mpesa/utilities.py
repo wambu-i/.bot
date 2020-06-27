@@ -34,8 +34,8 @@ def register_url():
 	data = {
 		'ShortCode': os.environ.get('short_code'),
 		'ResponseType': 'Completed',
-		'ConfirmationURL': os.environ.get('confirmation'),
-		'ValidationURL': os.environ.get('validation'),
+		'ConfirmationURL': os.environ.get('confirmation').format(os.environ.get('version')),
+		'ValidationURL': os.environ.get('validation').format(os.environ.get('version')),
 	}
 
 	r = requests.post(url, json = data, headers = headers)
@@ -67,7 +67,7 @@ def transact(number, amount):
 		'Amount': float(amount),
 		'Msisdn': number,
 		'BillRefNumber': 'account',
-		#'AccountReference': 'test'
+		'AccountReference': 'test'
 	}
 
 	r = requests.post(url, json = data, headers = headers)
