@@ -74,7 +74,7 @@ def make_transaction():
 
 	return r
 
-@api.route('/confirmation/', methods = ['GET'])
+@api.route('/confirmation/', methods = ['POST'])
 def get_confirmation():
 	data = request.json()
 	print(data)
@@ -93,3 +93,12 @@ def get_confirmation():
 @api.route('/simulate/', methods = ['POST'])
 def simulate_transaction():
 	pass
+
+@api.route('/validation', methods = ['POST'])
+def get_validation():
+	r = Response(status = 200, mimetype = 'application/json')
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
+
+	return r
