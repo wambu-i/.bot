@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from resources.utilities import create_logger
+from resources.helpers import create_logger
 from resources import setup
 
 app = setup(os.getenv('FLASK_CONFIG') or 'default')

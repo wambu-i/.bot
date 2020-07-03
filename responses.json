@@ -1,67 +1,77 @@
 {
-    "greeting": {
+    "w-greeting": {
         "text": "Hello ",
-        "description": "Welcome to Vacay's Facebook Travel Assistant. I can help you search and book for flights in a few clicks!"
+        "description": "Welcome to .bot's e-commerce assistant. I can help you pay for bills and utilities or purchase essentials goods and sevices!"
     },
-    "products":  {
-        "text" : "What would you like to do today?",
-        "options": ["Book a Flight", "Talk to Agent"],
-        "payload": ["flights", "contact"]
+    "w-products":  {
+        "text" : "What would you like to do today?\n1. Airtime Topup\n2. Buy KPLC tokens\n3. KPLC Postpaid Payments\n4. Pay for Internet\n5. Buy Bus Ticket\n6. Pay Other Bill\nPlease reply with the number of the menu item.",
+        "options": ["Airtime Topup", "Buy KPLC tokens", "KPLC Postpaid Payments", "Pay for Internet", "Buy Bus Ticket", "Pay Other Bill"],
+        "payload": ["credit", "tokens", "postpaid", "internet", "other"]
+	},
+    "airtime": {
+        "text": "Great. What network?\n1. Safaricom\n2. Airtel\n3. Telkom Kenya"
     },
-    "contact": {
-        "text": "Okay - an agent will be in contact with you shortly. Please type in your request below while you wait."
+    "internet": {
+        "text": "Great. Who is your current provider?\n1. Safaricom Home Fibre.\n2. Zuku Home Fibre."
     },
-    "from": {
-        "text": "Where are you flying from?\nPlease type your origin below. You can also choose from the following common cities:",
-        "options": ["Nairobi", "Mombasa", "Diani", "Kisumu", "Malindi"],
-        "payload": ["origin-nairobi", "origin-mombasa", "origin-diani", "origin-kisumu", "origin-malindi"]
+    "safaricom-airtime": {
+        "text": "Are you buying for your number? If so, please enter 1.\nOtherwise please enter the number you'd like to top-up."
     },
-    "destination": {
-        "text": "Where are you flying to?\nPlease type your destination below. You can also choose from the following common cities:",
-        "options": ["Nairobi", "Mombasa", "Diani", "Kisumu", "Malindi"],
-        "payload": ["dest-nairobi", "dest-mombasa", "dest-diani", "dest-kisumu", "dest-malindi"]
+    "airtel": {
+        "text": "Okay, enter the phone number below:"
     },
-    "dates": {
-        "text": "When do you want to travel?\nYou can type in dates such as Jan 16 to Jan 31."
+    "telkom": {
+        "text": "Okay, enter the phone number below:"
     },
-    "confirmation": {
-        "text": "Great! Here are your search details:"
+    "topup": {
+        "text": "Great! We're almost there!\nHow much would airtime would you like to buy? Please enter an amount below:"
     },
-    "details": {
-        "text": "Please confirm if your details are correct.",
-        "options": ["Correct", "Start New Search", "Speak to Agent"],
-        "payload": ["de-correct", "restart", "contact"]
+    "cancel": {
+        "text": "Okay - I am cancelling your current transaction.\nPlease type in restart or home to go back to the main menu."
+    },
+    "tokens": {
+        "text": "Please enter your pre-paid meter number below for tokens purchase."
+    },
+    "no-error": {
+        "text": "Sorry, but it seems that the number you've entered is not valid.\nPlease enter a valid phone number in the form 07XXXXXXXX."
+    },
+    "tokens-amount": {
+        "text": "Great! We're almost there.\nEnter amount you'd like to purchase below:"
+    },
+    "meter-error": {
+        "text": "Sorry, but that does not seem to be a valid meter number. Please verify and try again.\nIf the problem persists, please call customer service."
+    },
+    "postpaid": {
+        "text": "Please enter your postpaid meter number below for bill payment."
+    },
+    "postpaid-amount": {
+        "text": "Great! We're almost there.\nEnter amount you'd like to purchase below:"
+    },
+    "safaricom-home": {
+        "text": "Please enter your Safaricom Home Fibre account number:"
+    },
+    "internet-amount": {
+        "text": "Great! We're almost there!\nHow much does your subscription cost? Please enter due amount below:"
+    },
+    "zuku-home": {
+        "text": "Please enter your Zuku Home Fibre account number:\nPlease not that you will only be paying for an internet subscription package."
+    },
+    "home": {
+        "text": "To go back to the main menu at any point, please type in home or restart."
     },
     "restart": {
-        "text": "Okay, clearing all your previous responses and starting a new search."
+        "text": "Okay - I'm clearing all your previous responses. Please pick a new transaction below:\n1. Airtime Topup\n2. Buy KPLC tokens\n3. KPLC Postpaid Payments\n4. Pay for Internet\n5. Buy Bus Ticket\n6. Pay Other Bill\nPlease reply with the number of the menu item. "
     },
-    "date-error": {
-        "text": "There was an error in parsing the dates you provided.\nPlease try again and double check for their validity."
+    "ticket": {
+        "text": "Please bear with us as this option is still in development. We'll let you know once you can buy bus tickets through us.\nThank you!"
     },
-    "end-error": {
-        "text": "The end date of your trip cannot be earlier than your start date - please enter a valid interval!"
+    "other": {
+        "text": "Which service do you want?\n1. Paybill\n2. Lipa na M-Pesa."
     },
-    "search": {
-        "text": "Great!\nPlease wait as I get flight options for you!"
+    "paybill": {
+        "text": "Please enter the paybill number:"
     },
-    "adults": {
-        "text": "How many adults (12yrs and above) are traveling?\nPlease type a number below."
-    },
-    "children": {
-        "text": "How many children (2 - 11 yrs) are traveling?\nPlease type a number below."
-    },
-    "infants": {
-        "text": "How many infants (less than two years) are traveling?\nPlease type a number below."
-   },
-   "response": {
-       "text": "Here are some of the flights available - please click View All to start booking:"
-   },
-   "no-flights": {
-       "text": "Unfortunately, we could not get flights to match your criteria!\nPlease start a new search below.",
-       "options": ["New Search", "Speak to Agent"],
-       "payload": ["restart", "contact"]
-   },
-   "control": {
-       "text": "The agent has marked this request as done. If you want to start a new search, please use the main menu.\nThanks!"
-   }
+    "lipa": {
+        "text": "Please enter the Lipa na M-Pesa till number:"
+    }
 }

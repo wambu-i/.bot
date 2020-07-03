@@ -3,7 +3,7 @@ from urllib import parse
 import os
 import logging
 
-from .utilities import create_logger
+from .helpers import create_logger
 
 logger = create_logger('database')
 
@@ -38,12 +38,10 @@ class using_mongo:
 		present = collection.count_documents({'_id': id})
 		if present != 0:
 			client = collection.find_one({'_id': id})
-			print(client)
 			if _type in client:
 				v = client[_type]
 				logger.info("Client already has {} {}. Replacing ...".format(_type, v))
 				client[_type] = value
-				#collection.replace_one({_type: v}, {_type: value})
 				collection.update_one({'_id': id},  {"$set": {_type: value}}, upsert = False)
 			else:
 				logger.info("Adding property {} with value {}".format(_type, value))
@@ -77,8 +75,8 @@ class using_mongo:
 				'user': id
 			})
 
-	def create_booking(self, session, booking, response):
-		collection = self.db['bookings']
+	def record_transaction(self, session, transaction, details):
+		collection = self.db['transactions']
 		present = collection.count_documents({'_id': session})
 
 		if present != 0:
@@ -86,12 +84,12 @@ class using_mongo:
 		else:
 			collection.insert_one({
 				'_id': session,
-				'booking': booking,
-				'details': response
+				'transaction': transaction,
+				'details': details
 			})
 
-	def get_booking(self, session):
-		collection = self.db['bookings']
+	def get_transaction(self, session):
+		collection = self.db['transactions']
 		client = collection.find_one({'_id': session})
 
 		return client
@@ -100,7 +98,7 @@ class using_mongo:
 		collection = self.db['profile']
 		collection.insert(search)
 
-	def update_booking(self, session, status):
+	def update_transaction(self, session, status):
 		collection = self.db['bookings']
 		present = collection.count_documents({'_id': session})
 

@@ -34,12 +34,11 @@ def get_response(path):
 		return responses
 	return responses
 
-def make_response(_id, t, k, token, **kwargs):
+def make_response(k, **kwargs):
 	loaded = None
 	message = None
 
-	path = "responses.json"
-	response = get_response(path)
+	response = get_response(resp_path)
 	if response:
 		loaded = response.get(k, None)
 	else:
@@ -48,43 +47,13 @@ def make_response(_id, t, k, token, **kwargs):
 		logger.error("Could not find specified option in provided responses.")
 		return None
 
-	logger.info(graph.format(api, 'messages', token))
-	handler_name = 'make_{}_replies'.format(t)
-	req = 'send_{}_replies'.format(t)
-	try:
-		handler = getattr(_CURRENT_MODULE_, handler_name)
-		message = handler(loaded)
-		api_request = getattr(_CURRENT_MODULE_, req)
-		if t == 'message':
-			if k == 'greeting':
-				msg = loaded.get('text', None) + find_user(_id, token) + '!'
-				logger.info(message)
-				api_request(_id, msg, token)
-				api_request(_id, loaded["description"], token)
-			else:
-				api_request(_id, loaded.get('text', None), token)
-		elif t == 'quick':
-			text = loaded.get('text', None)
-			api_request(_id, text, message, token)
-		elif t == 'list':
-			logger.info(message)
-			api_request(_id, message, token)
-		elif t == 'location':
-			text = loaded.get('text', None)
-			api_request(_id, text, message, token)
-		elif t == 'number':
-			text = loaded.get('text', None)
-			api_request(_id, text, message, token)
-		else:
-			pass
+	if k == 'w-greeting':
+		msg = loaded.get('text') + '{1}!\n' + loaded.get('description')
+		return msg
 
-	except AttributeError as e:
-		logger.warning('Could not find handler for {}'.format(t))
-		logger.error(e, exec_info = True)
-	return True
+	return loaded['text']
 
 def send_message(number, message):
-	print(message)
 	data = {
         "To": number,
         "From": TWILIO_NUMBER,
@@ -98,5 +67,10 @@ def send_message(number, message):
 	else:
 		logger.error('{} :{}'.format(r.status_code, r.text))
 
-	re = r.json()
-	print(re['sid'], re['status'])
+def generate_user_session():
+	session = uuid4().hex
+
+	return session
+
+def make_introduction_replies():
+    pass

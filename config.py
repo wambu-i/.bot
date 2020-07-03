@@ -9,8 +9,8 @@ load_dotenv(env_path)
 class Config(object):
 	#App versions
 	VERSION = os.environ.get('version')
-	#SECRET_KEY = os.environ.get('session_key')
-	#SESSION_TYPE = os.environ.get('session_type')
+	SECRET_KEY = os.environ.get('session_key')
+	SESSION_TYPE = os.environ.get('session_type')
 
 	# Database Configurations
 	DB_URI = os.environ.get('uri')
