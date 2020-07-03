@@ -144,9 +144,44 @@ def initiate_stk_push(number, amount, description):
 		logger.info('Transaction successfully carried out.')
 		response = r.json()
 		print(response)
+		if response['ResponseCode'] == '0':
+			return response['CheckoutRequestID']
+		else:
+			return False
 
 	else:
 		logger.error('{} :{}'.format(r.status_code, r.text))
 
 def query_transaction_status(id):
-	pass
+	url = 'https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query'
+
+	access_token = os.environ.get('access', None)
+
+	headers = {
+		'Authorization': 'Bearer {}'.format(access_token),
+		'Content-Type': 'application/json'
+	}
+
+	passkey, timestamp = generate_pass_code()
+
+	print(passkey)
+
+	data = {
+		'BusinessShortCode': os.environ.get('lipa_code'),
+		'Password': passkey.decode('utf-8'),
+		'Timestamp': timestamp,
+		'CheckoutRequestID': id
+	}
+
+	r = requests.post(url, json = data, headers = headers)
+	if r.status_code in [200, 201]:
+		logger.info('Transaction successfully carried out.')
+		response = r.json()
+		print(response)
+		if response['ResponseCode'] == '0':
+			return True
+		else:
+			return False
+
+	else:
+		logger.error('{} :{}'.format(r.status_code, r.text))

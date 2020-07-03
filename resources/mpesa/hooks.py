@@ -5,7 +5,7 @@ import dotenv
 from flask import Flask, request, Response
 
 from . import api
-from .utilities import authenticate, register_url, transact, initiate_stk_push
+from .utilities import authenticate, register_url, transact, initiate_stk_push, query_transaction_status
 
 @api.route('/authenticate/', methods = ['GET'])
 def get_token():
@@ -77,7 +77,6 @@ def make_transaction():
 @api.route('/stk-confirmation/', methods = ['POST'])
 def get_confirmation():
 	data = request.data
-	print(data)
 
 	result = json.dumps({
 		'C2BPaymentConfirmationResult': 'Success'
@@ -111,7 +110,15 @@ def get_stk_details():
 
 	result = initiate_stk_push(number, amount, description)
 
-	r = Response(status = 200, mimetype = 'application/json')
+	if not result:
+		status = json.dumps({
+			'error': 'Could not successfully complete request'
+		})
+		r = Response(response = status, status = 500, mimetype = 'application/json')
+	else:
+		status = query_transaction_status(result)
+		if not status:
+			r = Response(status = 200, mimetype = 'application/json')
 
 	r.headers.add('Content-Type', 'application/json')
 	r.headers.add('Accept', 'application/json')
