@@ -28,6 +28,10 @@ options = {
 	'internet': {
 		'1': 'safaricom-home',
 		'2': 'zuku-home'
+	},
+	'other': {
+		'1': 'paybill',
+		'2': 'lipa'
 	}
 }
 
@@ -71,7 +75,7 @@ def parse_response(value, user):
 			elif len(value) > 1:
 				msg = make_response('no-error')
 			else:
-				_self = responses['user'].split(':')[1]
+				_self = responses['user']
 				db.create_client_profile(user, 'account', _self)
 				msg = make_response('topup')
 		elif 'amount' not in responses:
@@ -161,6 +165,20 @@ def parse_response(value, user):
 
 	elif responses['option'] == 'ticket':
 		pass
+
+	elif responses['option'] == 'other':
+		if 'type' not in responses:
+			menu = options.get('other')
+			db.create_client_profile(user, 'type', menu.get(value))
+			msg = make_response(menu.get(value))
+		else:
+			if responses['type'] == 'paybill':
+				if 'account' not in responses:
+					db.create_client_profile(user, 'account', value)
+					msg = make_response('amount')
+				elif 'amount' not in responses:
+					db.create_client_profile(user, 'amount', float(value))
+					msg = confirm.format(value, 'Paybill - {}'.format(responses['account']))
 	else:
 		pass
 

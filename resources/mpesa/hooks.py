@@ -5,7 +5,7 @@ import dotenv
 from flask import Flask, request, Response
 
 from . import api
-from .utilities import authenticate, register_url, transact
+from .utilities import authenticate, register_url, transact, initiate_stk_push
 
 @api.route('/authenticate/', methods = ['GET'])
 def get_token():
@@ -74,9 +74,9 @@ def make_transaction():
 
 	return r
 
-@api.route('/confirmation/', methods = ['POST'])
+@api.route('/stk-confirmation/', methods = ['POST'])
 def get_confirmation():
-	data = request.json()
+	data = request.data
 	print(data)
 
 	result = json.dumps({
@@ -100,5 +100,22 @@ def get_validation():
 	r.headers.add('Content-Type', 'application/json')
 	r.headers.add('Accept', 'application/json')
 	r.headers.add('Access-Control-Allow-Origin', '*')
+
+	return r
+
+@api.route('/stk/', methods = ['POST'])
+def get_stk_details():
+	number = request.args.get('number')
+	amount = request.args.get('amount')
+	description = request.args.get('description')
+
+	result = initiate_stk_push(number, amount, description)
+
+	r = Response(status = 200, mimetype = 'application/json')
+
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
+
 
 	return r

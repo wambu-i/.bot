@@ -1,5 +1,8 @@
 import os
 import requests
+import base64
+
+from datetime import datetime
 
 from ..helpers import create_logger
 
@@ -100,3 +103,50 @@ def simulate():
 		'Msisdn': number,
 		'BillRefNumber': ' '
 	}
+
+def generate_pass_code():
+	dt = datetime.now()
+	timestamp = '{:%Y%m%d%I%M%S}'.format(dt)
+	string = '{}{}{}'.format(os.environ.get('lipa_code'), os.environ.get('pass_key'), timestamp)
+	pass_code = base64.b64encode(string.encode())
+
+	return pass_code, timestamp
+
+def initiate_stk_push(number, amount, description):
+	url = os.environ.get('stk')
+	access_token = os.environ.get('access', None)
+
+	headers = {
+		'Authorization': 'Bearer {}'.format(access_token),
+		'Content-Type': 'application/json'
+	}
+
+	passkey, timestamp = generate_pass_code()
+
+	print(passkey)
+
+	data = {
+		'BusinessShortCode': os.environ.get('lipa_code'),
+		'Password': passkey.decode('utf-8'),
+		'Timestamp': timestamp,
+		'TransactionType': 'CustomerPayBillOnline',
+		'Amount': float(amount),
+		'PartyA': number,
+		'PartyB': os.environ.get('lipa_code'),
+		'PhoneNumber': number,
+		'CallBackURL': 'https://1ecd9a812cbd.ngrok.io/v1/api/stk-confirmation/',
+		'AccountReference': number,
+		'TransactionDesc': description
+	}
+
+	r = requests.post(url, json = data, headers = headers)
+	if r.status_code in [200, 201]:
+		logger.info('Transaction successfully carried out.')
+		response = r.json()
+		print(response)
+
+	else:
+		logger.error('{} :{}'.format(r.status_code, r.text))
+
+def query_transaction_status(id):
+	pass

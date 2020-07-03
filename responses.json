@@ -27,7 +27,7 @@
         "text": "Great! We're almost there!\nHow much would airtime would you like to buy? Please enter an amount below:"
     },
     "cancel": {
-        "text": "Okay - I am cancelling your current transaction.\nPlease type in restart or start to go back to the main menu."
+        "text": "Okay - I am cancelling your current transaction.\nPlease type in restart or home to go back to the main menu."
     },
     "tokens": {
         "text": "Please enter your pre-paid meter number below for tokens purchase."
@@ -55,5 +55,23 @@
     },
     "zuku-home": {
         "text": "Please enter your Zuku Home Fibre account number:\nPlease not that you will only be paying for an internet subscription package."
+    },
+    "home": {
+        "text": "To go back to the main menu at any point, please type in home or restart."
+    },
+    "restart": {
+        "text": "Okay - I'm clearing all your previous responses. Please pick a new transaction below:\n1. Airtime Topup\n2. Buy KPLC tokens\n3. KPLC Postpaid Payments\n4. Pay for Internet\n5. Buy Bus Ticket\n6. Pay Other Bill\nPlease reply with the number of the menu item. "
+    },
+    "ticket": {
+        "text": "Please bear with us as this option is still in development. We'll let you know once you can buy bus tickets through us.\nThank you!"
+    },
+    "other": {
+        "text": "Which service do you want?\n1. Paybill\n2. Lipa na M-Pesa."
+    },
+    "paybill": {
+        "text": "Please enter the paybill number:"
+    },
+    "lipa": {
+        "text": "Please enter the Lipa na M-Pesa till number:"
     }
 }
