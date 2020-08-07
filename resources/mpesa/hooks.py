@@ -103,26 +103,51 @@ def get_validation():
 	return r
 
 @api.route('/stk/', methods = ['POST'])
-def get_stk_details():
+def initiate_stk():
 	number = request.args.get('number')
 	amount = request.args.get('amount')
 	description = request.args.get('description')
 
-	result = initiate_stk_push(number, amount, description)
+	result, description = initiate_stk_push(number, amount, description)
 
 	if not result:
 		status = json.dumps({
-			'error': 'Could not successfully complete request'
+			'error': 'Could not successfully complete request',
+			'description': description
 		})
 		r = Response(response = status, status = 500, mimetype = 'application/json')
 	else:
-		status = query_transaction_status(result)
-		if not status:
-			r = Response(status = 200, mimetype = 'application/json')
+		status = json.dumps({
+			'success': 'Successfully sent request for processing.',
+			'id': description
+		})
+		r = Response(response = status, status = 200, mimetype = 'application/json')
 
 	r.headers.add('Content-Type', 'application/json')
 	r.headers.add('Accept', 'application/json')
 	r.headers.add('Access-Control-Allow-Origin', '*')
 
+	return r
+
+@api.route('/query/<id>/', methods = ['POST'])
+def get_stk_status(id):
+	result, description = query_transaction_status(id)
+
+	if not result:
+		status = json.dumps({
+			'error': 'Transaction not successfully completed.',
+			'description': description
+		})
+		r = Response(response = status, status = 500, mimetype = 'application/json')
+	else:
+		status = json.dumps({
+			'success': 'Successfully processed request',
+			'description': description
+		})
+		r = Response(response = status, status = 200, mimetype = 'application/json')
+
+	r.headers.add('Content-Type', 'application/json')
+	r.headers.add('Accept', 'application/json')
+	r.headers.add('Access-Control-Allow-Origin', '*')
 
 	return r

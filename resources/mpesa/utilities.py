@@ -134,23 +134,26 @@ def initiate_stk_push(number, amount, description):
 		'PartyA': number,
 		'PartyB': os.environ.get('lipa_code'),
 		'PhoneNumber': number,
-		'CallBackURL': 'https://1ecd9a812cbd.ngrok.io/v1/api/stk-confirmation/',
+		#'CallBackURL': 'https://eee769e9fd08.ngrok.io/v1/api/stk-confirmation/',
 		'AccountReference': number,
 		'TransactionDesc': description
 	}
 
 	r = requests.post(url, json = data, headers = headers)
+	response = r.json()
 	if r.status_code in [200, 201]:
 		logger.info('Transaction successfully carried out.')
-		response = r.json()
 		print(response)
 		if response['ResponseCode'] == '0':
-			return response['CheckoutRequestID']
+			return (True, response['CheckoutRequestID'])
 		else:
-			return False
+			logger.error('{}: {}'.format(r.status_code, response['ResponseDescription']))
+			return (False, response['ResponseDescription'])
 
 	else:
-		logger.error('{} :{}'.format(r.status_code, r.text))
+		description = response['errorMessage']
+		logger.error('{}: {}'.format(r.status_code, r.text))
+		return False, description
 
 def query_transaction_status(id):
 	url = 'https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query'
@@ -164,8 +167,6 @@ def query_transaction_status(id):
 
 	passkey, timestamp = generate_pass_code()
 
-	print(passkey)
-
 	data = {
 		'BusinessShortCode': os.environ.get('lipa_code'),
 		'Password': passkey.decode('utf-8'),
@@ -174,14 +175,18 @@ def query_transaction_status(id):
 	}
 
 	r = requests.post(url, json = data, headers = headers)
+	response = r.json()
+
 	if r.status_code in [200, 201]:
-		logger.info('Transaction successfully carried out.')
-		response = r.json()
+		logger.info('Request successfully carried out.')
 		print(response)
-		if response['ResponseCode'] == '0':
-			return True
+		if response['ResultCode'] == '0':
+			return True, response['ResultDesc']
 		else:
-			return False
+			logger.error('{}: {}'.format(response['ResponseCode'], response['ResultDesc']))
+			return False, response['ResultDesc']
 
 	else:
-		logger.error('{} :{}'.format(r.status_code, r.text))
+		description = response['errorMessage']
+		logger.error('{}: {}'.format(r.status_code, r.text))
+		return False, description
