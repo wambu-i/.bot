@@ -7,7 +7,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from . import bot
 from .utilities import create_logger, make_response, send_message, generate_user_session
 from .parsers import parse_response
-from resources.models import using_mongo
+from resources.models.mongo import using_mongo
 
 logger = create_logger('bot')
 opt_ins = ['hi', 'hello']

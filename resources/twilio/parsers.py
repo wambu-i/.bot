@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from flask import session
 
-from resources.models import using_mongo
+from resources.models.mongo import using_mongo
 from .utilities import make_response
 from resources.helpers import create_logger
 

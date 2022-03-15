@@ -8,4 +8,4 @@ logger = create_logger('main')
 
 if __name__ == '__main__':
     logger.info("Starting main app")
-    app.run()
+    app.run(port = 8657)

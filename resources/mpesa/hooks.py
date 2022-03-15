@@ -4,10 +4,10 @@ import dotenv
 
 from flask import Flask, request, Response
 
-from . import api
-from .utilities import authenticate, register_url, transact, initiate_stk_push, query_transaction_status
+from . import pesa
+from .utilities import authenticate, register_url, transact, initiate_stk_push
 
-@api.route('/authenticate/', methods = ['GET'])
+@pesa.route('/authenticate/', methods = ['GET'])
 def get_token():
 	token = authenticate()
 
@@ -29,7 +29,7 @@ def get_token():
 
 	return r
 
-@api.route('/register/', methods = ['POST'])
+@pesa.route('/register/', methods = ['POST'])
 def register_callback():
 	registered = register_url()
 
@@ -50,7 +50,7 @@ def register_callback():
 
 	return r
 
-@api.route('/transact/', methods=['POST'])
+@pesa.route('/transact/', methods=['POST'])
 def make_transaction():
 	number = request.args.get('number')
 	amount = request.args.get('amount')
@@ -74,7 +74,7 @@ def make_transaction():
 
 	return r
 
-@api.route('/stk-confirmation/', methods = ['POST'])
+@pesa.route('/stk-confirmation/', methods = ['POST'])
 def get_confirmation():
 	data = request.data
 
@@ -89,20 +89,11 @@ def get_confirmation():
 
 	return r
 
-@api.route('/simulate/', methods = ['POST'])
+@pesa.route('/simulate/', methods = ['POST'])
 def simulate_transaction():
 	pass
 
-@api.route('/validation', methods = ['POST'])
-def get_validation():
-	r = Response(status = 200, mimetype = 'application/json')
-	r.headers.add('Content-Type', 'application/json')
-	r.headers.add('Accept', 'application/json')
-	r.headers.add('Access-Control-Allow-Origin', '*')
-
-	return r
-
-@api.route('/stk/', methods = ['POST'])
+@pesa.route('/stk/', methods = ['POST'])
 def get_stk_details():
 	number = request.args.get('number')
 	amount = request.args.get('amount')
@@ -116,13 +107,13 @@ def get_stk_details():
 		})
 		r = Response(response = status, status = 500, mimetype = 'application/json')
 	else:
-		status = query_transaction_status(result)
-		if not status:
-			r = Response(status = 200, mimetype = 'application/json')
+		status = status = json.dumps({
+			'success': 'Successfully sent request for processing.'
+		})
+		r = Response(response = status, status = 200, mimetype = 'application/json')
 
 	r.headers.add('Content-Type', 'application/json')
 	r.headers.add('Accept', 'application/json')
 	r.headers.add('Access-Control-Allow-Origin', '*')
-
 
 	return r

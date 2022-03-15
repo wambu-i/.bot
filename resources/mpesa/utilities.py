@@ -129,12 +129,12 @@ def initiate_stk_push(number, amount, description):
 		'BusinessShortCode': os.environ.get('lipa_code'),
 		'Password': passkey.decode('utf-8'),
 		'Timestamp': timestamp,
-		'TransactionType': 'CustomerPayBillOnline',
+		'TransactionType': 'CustomerBuyGoodsOnline',
 		'Amount': float(amount),
 		'PartyA': number,
 		'PartyB': os.environ.get('lipa_code'),
 		'PhoneNumber': number,
-		'CallBackURL': 'https://1ecd9a812cbd.ngrok.io/v1/api/stk-confirmation/',
+		'CallBackURL': 'https://pesa.azurewebsites.net/v1/payments/',
 		'AccountReference': number,
 		'TransactionDesc': description
 	}

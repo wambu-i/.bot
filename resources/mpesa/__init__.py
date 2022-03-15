@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-api = Blueprint('api', __name__)
+pesa = Blueprint('pesa', __name__)
 
 from . import hooks

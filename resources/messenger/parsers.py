@@ -3,7 +3,7 @@ from datetime import datetime
 from uuid import uuid4
 
 from resources.utilities import create_logger, make_response, pass_over_control, parse_dates, send_message_replies, make_generic_message, send_carousel, take_thread_control
-from resources.models import using_mongo
+from resources.models.mongo import using_mongo
 from resources.helpers import create_messenger_flow
 
 logger = create_logger('parsers')
